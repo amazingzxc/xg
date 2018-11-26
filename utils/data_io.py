@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 
 prefix = './data/'
-def get_img(img_path, resize_h):
+def get_img(img_path, resize_h=128):
     img=scipy.misc.imread(img_path).astype(np.float)
     # crop resize
     # crop_w = crop_h

@@ -92,10 +92,11 @@ def encoder(image, options, reuse=False, name="generator_encoder"):
         e8 = instance_norm(conv2d(lrelu(e7), options.gf_dim * 8, name='g_e8_conv'), 'g_bn_e8')
         # e8 is (1 x 1 x self.gf_dim*8)
 
-    return [e1,e2,e3,e4,e5,e6,e7,e8]
+    return [e1,e2,e3,e4,e5,e6,e7],e8
 
-def decoder(feature, options, reuse=False, name="generator_decoder"):
-    e1, e2, e3, e4, e5, e6, e7, e8 = feature
+def decoder(mutil_feature,feature, options, reuse=False, name="generator_decoder"):
+    e1, e2, e3, e4, e5, e6, e7  =mutil_feature
+    e8 = feature
     dropout_rate = 0.5 if options.is_training else 1.0
     with tf.variable_scope(name):
         # image is 256 x 256 x input_c_dim
