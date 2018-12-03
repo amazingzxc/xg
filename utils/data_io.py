@@ -24,12 +24,18 @@ def get_img(img_path, resize_h=128):
     cropped_image = scipy.misc.imresize(img, [resize_h, resize_w])
     # plt.imshow(cropped_image[:, :,0])
     # plt.show()
-    return np.array(cropped_image)/255.0
+    return np.array(cropped_image)/127.5 - 1.
+
+def show_img(img):
+    plt.imshow(img)
+    plt.show()
 
 if __name__=='__main__':
-    test_path = '../data/zhenshi'
-    # test_path='../data/donman'
+    test_path = '../data/y_domain'
+    # test_path='../data/x_domain'
     img_path=os.path.join(test_path,os.listdir(test_path)[0])
     # print(get_img(img_path,200,200))
-    plt.imshow(get_img(img_path,128))
-    plt.show()
+    img = get_img(img_path,128)
+    show_img(img)
+    show_img((img+1)/2)
+

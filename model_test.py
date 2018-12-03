@@ -2,6 +2,7 @@ from model.data import Data
 from model.discriminator import discriminator
 from model.generator import encoder,decoder
 from model.xgan import XGAN
+from utils.data_io import show_img
 import argparse
 
 
@@ -32,11 +33,25 @@ parser.add_argument('--L1_lambda', dest='L1_lambda', type=float, default=10.0, h
 parser.add_argument('--use_resnet', dest='use_resnet', type=bool, default=True, help='generation network using reidule block')
 parser.add_argument('--use_lsgan', dest='use_lsgan', type=bool, default=True, help='gan loss defined in lsgan')
 parser.add_argument('--max_size', dest='max_size', type=int, default=50, help='max size of image pool, 0 means do not use image pool')
-parser.add_argument('--is_training', dest='is_training', type=bool, default=True, help='is training or not')
+parser.add_argument('--is_training', dest='is_training', type=bool, default=False, help='is training or not')
 
 args = parser.parse_args()
 
-data=Data(args.img_size,is_train=args.is_training,test_img_path='./trans_img/Vaclav_Klaus_0002.jpg')
-
+data=Data(args.img_size,is_train=args.is_training,test_img_path='./data/x_domain/Aaron_Eckhart_0001.jpg')
+origin_img,_=data.next_batch(1)
 xgan=XGAN(args,encoder,decoder,discriminator,data)
-xgan.test('xgan')
+img,img1 = xgan.test('xgan20_d29.634479522705078_g15.58745563030243')
+# show_img(data.next_batch(1)[0][0])
+
+def uni(img):
+    tmp = (img[0]+1)/2
+    #tmp1=tmp-tmp.min()
+    #tmp1=(tmp-tmp.min())/(tmp.max()-tmp.min())
+    return tmp
+show_img(origin_img[0])
+show_img(img[0])
+show_img(img1[0])
+
+show_img(uni(origin_img))
+show_img(uni(img))
+show_img(uni(img1))

@@ -136,7 +136,8 @@ def decoder(mutil_feature,feature, options, reuse=False, name="generator_decoder
         d7 = tf.concat([instance_norm(d7, 'g_bn_d7'), e1], 3)
         # d7 is (128 x 128 x self.gf_dim*1*2)
 
+        #d8 = deconv2d(d7, options.output_c_dim, name='g_d8')#不用激活函数
         d8 = deconv2d(tf.nn.relu(d7), options.output_c_dim, name='g_d8')
         # d8 is (256 x 256 x output_c_dim)
-
-    return tf.nn.tanh(d8)
+    #return d8
+    return tf.nn.sigmoid(d8)#tanh-1 到1 有问题(对图片预处理)
