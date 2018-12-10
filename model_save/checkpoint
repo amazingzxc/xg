@@ -1,0 +1,3 @@
+model_checkpoint_path: "/home/amazingzxc/learning/GAN/XGAN_amazingzxc/model_save/xgan5_d651.7857617139816_g1073.3397343754768.ckpt"
+all_model_checkpoint_paths: "/home/amazingzxc/learning/GAN/XGAN_amazingzxc/model_save/xgan2_d650.6616867184639_g1145.0820410847664.ckpt"
+all_model_checkpoint_paths: "/home/amazingzxc/learning/GAN/XGAN_amazingzxc/model_save/xgan5_d651.7857617139816_g1073.3397343754768.ckpt"

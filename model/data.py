@@ -11,9 +11,9 @@ class Data(object):
         if is_train:
             size_x=len(glob('./data/x_domain/*.jpg'))
             size_y=len(glob('./data/y_domain/*.jpg'))
-            print('for debug use')
-            use_len=100
-            # use_len=min(size_x,size_y)
+            #print('for debug use')
+            #use_len=100
+            use_len=min(size_x,size_y)
         else:
             use_len=1
         self._num_examples = use_len
@@ -21,6 +21,9 @@ class Data(object):
         if is_train:
             self.x_domain_list = glob('./data/x_domain/*.jpg')[:use_len]
             #self.x_domain_list = [if '.jpg'in tmp for tmp in os.listdir('./data/x_domain/')]
+            self.y_domain_list = glob('./data/y_domain/*.jpg')[:use_len]
+            self.x_domain_list = glob('./data/x_domain/*.jpg')[:use_len]
+            # self.x_domain_list = [if '.jpg'in tmp for tmp in os.listdir('./data/x_domain/')]
             self.y_domain_list = glob('./data/y_domain/*.jpg')[:use_len]
         else:
             self.x_domain_list = glob(test_img_path)
@@ -59,8 +62,13 @@ class Data(object):
         if self._epochs_completed == 0 and start == 0 and shuffle:
           perm0 = numpy.arange(self._num_examples)
           numpy.random.shuffle(perm0)
-          self._x_domain_data = self.x_domain_data[perm0]
-          self._y_domain_data = self.y_domain_data[perm0]
+          try:
+              self._x_domain_data = self.x_domain_data[perm0]
+              self._y_domain_data = self.y_domain_data[perm0]
+          except:
+              return None
+
+
         # Go to the next epoch
         if start + batch_size > self._num_examples:
           # Finished epoch
